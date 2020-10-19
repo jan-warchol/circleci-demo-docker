@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Push Docker image
           command: |
-            echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_LOGIN} --password-stdin
+            docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
             docker push ${IMAGE_NAME}:ci-build-${CIRCLE_BUILD_NUM}
 
 workflows:
