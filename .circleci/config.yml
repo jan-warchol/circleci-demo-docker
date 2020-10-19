@@ -20,3 +20,10 @@ jobs:
             docker build -t ${IMAGE_NAME}:$TAG .
             docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
             docker push ${IMAGE_NAME}:$TAG
+
+workflows:
+  do-stuff:
+    jobs:
+      - build:
+          context:
+            - jw-default
