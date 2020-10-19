@@ -7,6 +7,7 @@ jobs:
 
     environment:
       IMAGE_NAME: janwarchol/ci-test
+      IMAGE_TAG: ci-build-${CIRCLE_BUILD_NUM}
       DOCKER_LOGIN: janwarchol
       # set DOCKER_PASSWORD in project settings.
 
@@ -18,10 +19,10 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t ${IMAGE_NAME}:ci-build-${CIRCLE_BUILD_NUM} .
+            docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
 
       - run:
           name: Push Docker image
           command: |
             docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD}
-            docker push ${IMAGE_NAME}:ci-build-${CIRCLE_BUILD_NUM}
+            docker push ${IMAGE_NAME}:${IMAGE_TAG}
