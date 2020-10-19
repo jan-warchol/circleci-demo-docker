@@ -14,12 +14,15 @@ jobs:
       - setup_remote_docker
 
       - run:
-          name: Build and push Docker image
+          name: Build Docker image
           command: |
-            TAG="${CIRCLE_BUILD_NUM}"
-            docker build -t ${IMAGE_NAME}:$TAG .
-            docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-            docker push ${IMAGE_NAME}:$TAG
+            docker build -t ${IMAGE_NAME}:ci-build-${CIRCLE_BUILD_NUM} .
+
+      - run:
+          name: Push Docker image
+          command: |
+            docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+            docker push ${IMAGE_NAME}:ci-build-${CIRCLE_BUILD_NUM}
 
 workflows:
   do-stuff:
